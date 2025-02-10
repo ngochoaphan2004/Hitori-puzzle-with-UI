@@ -9,5 +9,5 @@ Hiện tại trong thư mục `data`, chỉ có dữ liệu cho kích thước b
 
 file test.py mình chỉ dùng để test các hàm của mình thôi không có liên quan đến project nên mọi người đừng quan tâm.
 
-- Các bạn cải tiến được gì thì cải tiến nha.
+- Minh thấy giải thuật **BFS** giải khá lâu nên mọi người xem có cải tiến được gì không nha.
 - Nếu được thì thêm nhiều testcase nha.

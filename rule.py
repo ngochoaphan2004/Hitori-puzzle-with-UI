@@ -3,9 +3,6 @@ import copy
 from collections import deque
 
 def isConnected(matrix, white_cells, start):
-    """
-    Kiểm tra xem các ô trắng có còn kết nối sau khi tô đen một ô không.
-    """
     n = len(matrix)
     visited = set()
     queue = deque([start])
@@ -24,35 +21,26 @@ def isConnected(matrix, white_cells, start):
                 visited.add((nx, ny))
                 queue.append((nx, ny))
     
-    return connected_count == len(white_cells)  # Tất cả ô trắng phải được kết nối
+    return connected_count == len(white_cells)  
 
 def checkIsolation(matrix, x, y):
-    """
-    Kiểm tra xem nếu tô đen ô (x, y) có làm cô lập các ô trắng không.
-    """
+    
     if matrix[x][y] == -1:
-        return False  # Chỉ có thể tô đen ô trắng
+        return False  
     
     n = len(matrix)
     white_cells = {(i, j) for i in range(n) for j in range(n) if matrix[i][j] != -1 and (i, j) != (x, y)}
     
     if not white_cells:
-        return False  # Nếu không còn ô trắng nào, lưới không hợp lệ
+        return False  
     
-    start = next(iter(white_cells))  # Chọn một ô trắng để bắt đầu kiểm tra
+    start = next(iter(white_cells))  
     
-    return not isConnected(matrix, white_cells, start)  # Nếu mất kết nối, trả về True (vi phạm)
+    return not isConnected(matrix, white_cells, start)  
 
 def shouldShadedPositions(matrix):
-    """
-    Tìm các vị trí có chữ số trùng trên cùng một hàng hoặc một cột.
-    :param matrix: Mảng 2 chiều.
-    :return: Danh sách các vị trí có chữ số trùng.
-    """
     size = len(matrix)
     duplicates = []
-    
-    # Kiểm tra trùng trong hàng
     for i in range(size):
         seen = {}
         for j in range(size):
@@ -62,8 +50,6 @@ def shouldShadedPositions(matrix):
                 duplicates.append(seen[num])
             else:
                 seen[num] = (i, j)
-    
-    # Kiểm tra trùng trong cột
     for j in range(size):
         seen = {}
         for i in range(size):
@@ -78,7 +64,7 @@ def shouldShadedPositions(matrix):
 
 
 def positionNeighbor (posible: list, size):
-    #Return neighbor.
+    
     ans = []
     if posible[0] + 1 < size: 
         ans.append([posible[0]+ 1, posible[1]])
@@ -101,23 +87,14 @@ def checkBetweenPair (matrix: list, position: list):
     return False
 
 def canShadePosition (temp: Node, position: list) -> bool:
-    #Check if shade in 'position' will create an enclosed shaded square.
     i = position[0]
     j = position[1]
     if temp.matrix[i][j] == -1:
         return False
-    # #shouldShaded
-    # if (i, j) not in shouldShadedPositions(temp.matrix):
-    #     return False
-    #Check neighbor
     list2 = positionNeighbor(position, temp.size)
     for item in list2:
       if temp.matrix[item[0]][item[1]] == -1:
           return False
-    # #Check between pair
-    # if checkBetweenPair(temp.matrix, position):
-    #     return False
-    #Check Enclosed
     if checkIsolation(temp.matrix, i, j):
         return False
     return True
