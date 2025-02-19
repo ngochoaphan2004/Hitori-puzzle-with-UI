@@ -38,6 +38,7 @@ def checkIsolation(matrix, x, y):
     
     return not isConnected(matrix, white_cells, start)  
 
+# tim vi tri ma o bi trung lap
 def shouldShadedPositions(matrix):
     size = len(matrix)
     duplicates = []

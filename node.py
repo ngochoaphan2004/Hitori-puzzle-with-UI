@@ -1,5 +1,5 @@
 import copy
-
+# tra ve so loi cua truong hop
 def remainNumber(matrix: list):
     count = 0
     for row in matrix:

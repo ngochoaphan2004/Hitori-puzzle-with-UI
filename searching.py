@@ -5,16 +5,18 @@ import time
 import copy
 
 class Searching:
-    def __init__(self) -> None:
-        self.size = int(input("Choose size: "))
-        temp = input("Choose testcase: ")
-        self.inputTESTCASE = data["size" + str(self.size)]["testcase" +str(temp)]
+    def __init__(self,size,test) -> None:
+        self.size = size
+        self.inputTESTCASE = data["size" + str(self.size)]["testcase" +str(test)]
         self.initNode = Node(self.inputTESTCASE["matrix"], self.size, None)
         #PreCheck the matrix
         self.carePosition = rule.shouldShadedPositions(self.initNode.matrix)
         self.checkedNode = self.initNode
         
         self.path = []
+        self.result = 0
+        self.time = 0
+        self.numberNode = 0
         
     def preCheckNode(self):
         ignore = []
@@ -66,6 +68,10 @@ class Searching:
                 print("Total node generated: ", len(visited) + len(queue))
                 print("Solution: ")
                 currentNode.printMatrix()
+
+                self.result = currentNode
+                self.time = executeTime
+                self.numberNode = len(visited) + len(queue)
                 return
             
             generateNodeList = rule.generateNode(currentNode, self.carePosition)
@@ -91,6 +97,11 @@ class Searching:
                 print("Total nodes generated: ", len(openList) + len(closeList))
                 print("Solution: ")
                 currentNode[1].printMatrix()
+
+
+                self.result = currentNode[1]
+                self.time = executeTime
+                self.numberNode = len(openList) + len(closeList)
                 return
             generateNodeList = rule.generateNode(currentNode[1], self.carePosition)
             for item in generateNodeList:
