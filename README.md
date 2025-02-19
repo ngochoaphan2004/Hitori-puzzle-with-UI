@@ -6,7 +6,7 @@ Mình mới hiện thực **BFS** và **A star**.
 
 Mọi người chạy file `main.py` để kiểm tra.
 
-Hiện tại trong file `data`, chỉ có dữ liệu cho kích thước bảng là **5** và **3 test case**.
+Chạy UI bằng file `UI.py`.
 
 file `test.py` mình chỉ dùng để test các hàm của mình thôi không có liên quan đến project nên mọi người đừng quan tâm.
 
