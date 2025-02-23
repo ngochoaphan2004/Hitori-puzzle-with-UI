@@ -70,6 +70,30 @@ class UI():
                 self.list_frame[0].tkraise()
                 self.list_frame[0].pack(fill=BOTH, expand=True)
 
+        def return_to_default(self):
+                size = SIZEENTRY[self.sizeindex]
+                if self.matrixStatus:
+                        for y in range(size):
+                                for x in range(size):
+                                        value = self.temp.initNode.matrix[y][x]  
+                                        self.canvas.create_rectangle(self.cellsize*x,self.cellsize*y,self.cellsize*(x+1),self.cellsize*(y+1),fill=BGCOLOR)                                 
+                                        label = Label(self.matrixFrame, text=str(value), font=('verdana', 18), bg=BGCOLOR)
+                                        label.place(x=int(self.cellsize/2 + self.cellsize*x), y=int(self.cellsize/2 + self.cellsize*y), anchor='center')
+                                        self.displayLabel.append(label)  
+
+                else:
+                        for widget in self.displayLabel:
+                                widget.destroy()
+                        self.displayLabel.clear()
+
+                        for y in range(size):
+                                for x in range(size):
+                                        value = self.temp.result.matrix[y][x]
+                                        if value == -1:
+                                                self.canvas.create_rectangle(self.cellsize*x,self.cellsize*y,self.cellsize*(x+1),self.cellsize*(y+1),fill='black')   
+                self.canvas.pack(fill = BOTH, expand = True)
+                self.matrixStatus = not self.matrixStatus
+
         def page1_init(self):
                 self.list_frame.append(Frame(self.root,width= WINDOWWIDTH,height=WINDOWHEIGHT,bg=BGCOLOR,borderwidth=0))
                 self.list_frame[0].pack(fill=BOTH,expand=True)
@@ -180,24 +204,33 @@ class UI():
                 arrresize = arr.resize((70,70))
                 self.arrPhoto = ImageTk.PhotoImage(arrresize)
                 Button(self.list_frame[1], width=70, height=70,bg=BGCOLOR,image=self.arrPhoto, border=0,font=('verdana',16),command=lambda :self.turn_to_page1(),activebackground=BGCOLOR).place(relx=0.1,rely=0.9,anchor="sw")
+                self.matrixStatus = True
+                Button(self.list_frame[1],bg=BGCOLOR,text="Change",font=('verdana',16),activebackground=BGCOLOR, command=lambda : self.return_to_default()).place(relx=0.3,rely=0.9,anchor="sw", width=100, height=50)
 
                 matrixSize = 360
                 self.matrixFrame = Frame(self.list_frame[1],width=matrixSize,height=matrixSize,bg=BGCOLOR,highlightthickness=3,highlightbackground='black')
                 self.matrixFrame.place(relx=0.65,rely=0.5,anchor='center')
 
-                size = 5
+                size = SIZEENTRY[self.sizeindex]
+                self.displayLabel = []
 
                 self.canvas = Canvas(self.matrixFrame,width=matrixSize,height=matrixSize,bg=BGCOLOR,highlightthickness=0)
                 
-                cellsize = int(matrixSize/size)
+                self.cellsize = int(matrixSize/size)
                 for i in range(size):
-                        self.canvas.create_line((cellsize)*(i+1),0,(cellsize)*(i+1),matrixSize)
-                        self.canvas.create_line(0,(cellsize)*(i+1),matrixSize,(cellsize)*(i+1))
+                        self.canvas.create_line((self.cellsize)*(i+1),0,(self.cellsize)*(i+1),matrixSize)
+                        self.canvas.create_line(0,(self.cellsize)*(i+1),matrixSize,(self.cellsize)*(i+1))
+                
                 for y in range(size):
                         for x in range(size):
-                                Label(self.matrixFrame,text=str(self.temp.result.matrix[y][x]),font=('verdana',18),bg=BGCOLOR).place(x = int(cellsize/2 + cellsize*x), y = int(cellsize/2 + cellsize*y),anchor='center')      
+                                value = self.temp.result.matrix[y][x]
+                                if value != -1:
+                                        Label(self.matrixFrame,text=str(value),font=('verdana',18),bg=BGCOLOR).place(x = int(self.cellsize/2 + self.cellsize*x), y = int(self.cellsize/2 + self.cellsize*y),anchor='center')      
+                                else:
+                                     self.canvas.create_rectangle(self.cellsize*x,self.cellsize*y,self.cellsize*(x+1),self.cellsize*(y+1),fill='black')   
                                 
                 self.canvas.pack(fill = BOTH, expand = True)
+
 
         def __init__(self):
                 self.root = tk.Tk()

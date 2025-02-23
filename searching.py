@@ -68,7 +68,7 @@ class Searching:
                 print("Total node generated: ", len(visited) + len(queue))
                 print("Solution: ")
                 currentNode.printMatrix()
-
+                
                 self.result = currentNode
                 self.time = executeTime
                 self.numberNode = len(visited) + len(queue)
