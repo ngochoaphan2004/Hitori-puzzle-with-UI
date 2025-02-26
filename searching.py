@@ -5,10 +5,14 @@ import time
 import copy
 
 class Searching:
-    def __init__(self,size,test) -> None:
+    def __init__(self,size,test,state=True) -> None:
         self.size = size
-        self.inputTESTCASE = data["size" + str(self.size)]["testcase" +str(test)]
-        self.initNode = Node(self.inputTESTCASE["matrix"], self.size, None)
+        if state:
+            self.inputTESTCASE = data["size" + str(self.size)]["testcase" +str(test)]
+            self.initNode = Node(self.inputTESTCASE["matrix"], self.size, None)
+        else:
+            self.inputTESTCASE = test
+            self.initNode = Node(test, self.size, None)
         #PreCheck the matrix
         self.carePosition = rule.shouldShadedPositions(self.initNode.matrix)
         self.checkedNode = self.initNode
