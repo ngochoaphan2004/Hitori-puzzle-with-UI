@@ -7,12 +7,19 @@ import copy
 class Searching:
     def __init__(self,size,test,state=True) -> None:
         self.size = size
-        if state:
-            self.inputTESTCASE = data["size" + str(self.size)]["testcase" +str(test)]
-            self.initNode = Node(self.inputTESTCASE["matrix"], self.size, None)
-        else:
-            self.inputTESTCASE = test
-            self.initNode = Node(test, self.size, None)
+        self.err = False
+        try:
+            if state:
+                self.inputTESTCASE = data["size" + str(self.size)]["testcase" +str(test)]
+                self.initNode = Node(self.inputTESTCASE["matrix"], self.size, None)
+            else:
+                self.inputTESTCASE = test
+                self.initNode = Node(test, self.size, None)
+        except KeyError:
+            print(f"Test {test} with size {size} not exist in file data.py.")
+            self.err = True
+            return
+        
         #PreCheck the matrix
         self.carePosition = rule.shouldShadedPositions(self.initNode.matrix)
         self.checkedNode = self.initNode

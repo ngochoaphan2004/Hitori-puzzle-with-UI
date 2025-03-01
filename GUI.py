@@ -50,6 +50,12 @@ class UI():
                                 test = self.testindex
                         # run
                         self.temp = Searching(SIZEENTRY[size] if size < 6 else size, TESTENTRY[test] if test < 6 else test)
+
+                        if(self.temp.err):
+                                self.arrLabel = Label(self.list_frame[0],text=f"Test {TESTENTRY[test] if test < 6 else test} with size {SIZEENTRY[size] if size < 6 else size} not exist in file data.py.",font=('verdana',10,'bold'),bg=BGCOLOR,fg='red')
+                                self.arrLabel.place(relx=0.5,rely=0.9,anchor='center')
+                        else:
+                                self.arrLabel.destroy()
                         if self.algorindex == 0:
                                 self.temp.bfs()
                         elif self.algorindex == 1:
